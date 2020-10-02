@@ -15,6 +15,26 @@ const Register = ({onRouteChange}) => {
                     <div className="mt3">
                         <label 
                             className="db fw6 lh-copy f6" 
+                            for="First Name">First Name</label>
+                        <input 
+                            className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                            type="text" 
+                            name="first-name"  
+                            id="first-name" />
+                    </div>
+                    <div className="mt3">
+                        <label 
+                            className="db fw6 lh-copy f6" 
+                            for="last-name">Last Name</label>
+                        <input 
+                            className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                            type="text" 
+                            name="last-name"  
+                            id="last-name" />
+                    </div>
+                    <div className="mt3">
+                        <label 
+                            className="db fw6 lh-copy f6" 
                             for="email-address">Email</label>
                         <input 
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
@@ -32,6 +52,16 @@ const Register = ({onRouteChange}) => {
                             name="password"  
                             id="password" />
                     </div>
+                    <div className="mv3">
+                        <label 
+                            className="db fw6 lh-copy f6" 
+                            for="confirm-password">Confirm Password</label>
+                        <input 
+                            className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                            type="password" 
+                            name="confirm-password"  
+                            id="confirm-password" />
+                    </div>
                     </fieldset>
                     <div className="">
                     <input 
@@ -41,9 +71,9 @@ const Register = ({onRouteChange}) => {
                         value="Create" />
                     </div>
                     <div className="lh-copy mt3">
-                    <a 
-                        href="#0" 
-                        className="f6 link dim black db">Create Account</a>
+                    <p
+                        onClick={() => onRouteChange('signin')} 
+                        className="f6 link dim black db pointer">Already have an account? Sign up</p>
                     </div>
                 </form>
             </main>

@@ -77,9 +77,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <Navigation onRouteChange={this.onRouteChange} />
-        { this.state.route === 'signin' 
-        ? <SignIn onRouteChange={this.onRouteChange} /> :
-          <div>
+        { this.state.route === 'home' 
+          ? <div>
             <Logo />
             <Rank />
             <ImageLinkForm 
@@ -88,7 +87,11 @@ class App extends React.Component {
             <FaceRecognition 
               imageURL={this.state.imageURL}
               borderBoxes={this.state.borderBoxes} />
-          </div>
+          </div> 
+          : (this.state.route === 'signin' ?
+              <SignIn onRouteChange={this.onRouteChange} /> :
+              <Register onRouteChange={this.onRouteChange} />
+            )
         }
       </div>
     );
