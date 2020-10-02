@@ -5,9 +5,10 @@ import React from 'react';
 const Register = ({onRouteChange}) => {
     // ------------------------------------------------------------------------
     return (
-        <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+        <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 
+            shadow-5 center">
             <main className="pa4 black-80">
-                <form className="measure">
+                <div className="measure">
                     <fieldset 
                         id="sign_up" 
                         className="ba b--transparent ph0 mh0">
@@ -15,9 +16,10 @@ const Register = ({onRouteChange}) => {
                     <div className="mt3">
                         <label 
                             className="db fw6 lh-copy f6" 
-                            for="First Name">First Name</label>
+                            htmlFor="First Name">First Name</label>
                         <input 
-                            className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                            className="pa2 input-reset ba bg-transparent 
+                                hover-bg-black hover-white w-100" 
                             type="text" 
                             name="first-name"  
                             id="first-name" />
@@ -25,9 +27,10 @@ const Register = ({onRouteChange}) => {
                     <div className="mt3">
                         <label 
                             className="db fw6 lh-copy f6" 
-                            for="last-name">Last Name</label>
+                            htmlFor="last-name">Last Name</label>
                         <input 
-                            className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                            className="pa2 input-reset ba bg-transparent 
+                                hover-bg-black hover-white w-100" 
                             type="text" 
                             name="last-name"  
                             id="last-name" />
@@ -35,9 +38,10 @@ const Register = ({onRouteChange}) => {
                     <div className="mt3">
                         <label 
                             className="db fw6 lh-copy f6" 
-                            for="email-address">Email</label>
+                            htmlFor="email-address">Email</label>
                         <input 
-                            className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                            className="pa2 input-reset ba bg-transparent 
+                                hover-bg-black hover-white w-100" 
                             type="email" 
                             name="email-address"  
                             id="email-address" />
@@ -45,9 +49,10 @@ const Register = ({onRouteChange}) => {
                     <div className="mv3">
                         <label 
                             className="db fw6 lh-copy f6" 
-                            for="password">Password</label>
+                            htmlFor="password">Password</label>
                         <input 
-                            className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                            className="b pa2 input-reset ba bg-transparent 
+                                hover-bg-black hover-white w-100" 
                             type="password" 
                             name="password"  
                             id="password" />
@@ -55,9 +60,10 @@ const Register = ({onRouteChange}) => {
                     <div className="mv3">
                         <label 
                             className="db fw6 lh-copy f6" 
-                            for="confirm-password">Confirm Password</label>
+                            htmlFor="confirm-password">Confirm Password</label>
                         <input 
-                            className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                            className="b pa2 input-reset ba bg-transparent 
+                                hover-bg-black hover-white w-100" 
                             type="password" 
                             name="confirm-password"  
                             id="confirm-password" />
@@ -66,16 +72,19 @@ const Register = ({onRouteChange}) => {
                     <div className="">
                     <input 
                         onClick={() => onRouteChange('home')}
-                        className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
+                        className="b ph3 pv2 input-reset ba b--black 
+                            bg-transparent grow pointer f6 dib" 
                         type="submit" 
                         value="Create" />
                     </div>
                     <div className="lh-copy mt3">
                     <p
                         onClick={() => onRouteChange('signin')} 
-                        className="f6 link dim black db pointer">Already have an account? Sign up</p>
+                        className="f6 link dim black db pointer">
+                        Already have an account? Sign in
+                    </p>
                     </div>
-                </form>
+                </div>
             </main>
         </article>
     );
