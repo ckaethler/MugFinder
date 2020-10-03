@@ -100,7 +100,8 @@ class SignIn extends React.Component {
                             <p 
                                 onClick={() => onRouteChange('register')} 
                                 className="f6 link dim black db pointer">
-                                Create Account
+                                Don't have an account?
+                                <strong>Create One.</strong>
                             </p>
                         </div>
                     </div>

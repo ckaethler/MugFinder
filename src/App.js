@@ -25,7 +25,28 @@ class App extends React.Component {
       borderBoxes: [],
       route: 'signin',
       isSignedIn: false,
+      user: {
+        id: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        entries: 0,
+        joined: new Date(),
+      }
     }
+  }
+
+  loadUser = (currentUser) => {
+    this.setState({
+      user: {
+        id: currentUser.id,
+        email: currentUser.email,
+        firstName: currentUser.firstName,
+        lastName: currentUser.lastName,
+        entries: currentUser.entries,
+        joined: currentUser.joined,
+      }
+    });
   }
 
   // --------------------------------------------------------------------------
@@ -98,7 +119,9 @@ class App extends React.Component {
           </div> 
           : (route === 'signin' ?
               <SignIn onRouteChange={this.onRouteChange} /> :
-              <Register onRouteChange={this.onRouteChange} />
+              <Register 
+                onRouteChange={this.onRouteChange}
+                loadUser={this.loadUser} />
             )
         }
       </div>
