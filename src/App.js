@@ -37,7 +37,6 @@ class App extends React.Component {
 
   // Loads current signed in user's information to current state
   loadUser = (currentUser) => {
-    console.log(currentUser);
     this.setState({
       user: {
         id: currentUser.id,
@@ -83,17 +82,17 @@ class App extends React.Component {
 
   // Handles when users submits a URL of a picture
   onDetectSubmit = () => {
-    // this.setState({imageURL: this.state.input});
-    // app.models
-    //   .predict(
-    //     Clarifai.FACE_DETECT_MODEL, 
-    //     this.state.input)
-    //   .then(response => {
-    //     this.setBorderBoxes(this.calculateFaceLocations(response))
-    //   })
-    //   .then(response => {
-    //     if (response) {
-      console.log(this.state.user);
+    this.setState({imageURL: this.state.input});
+
+    // app
+      // .models
+      // .predict(
+        // Clarifai.FACE_DETECT_MODEL, 
+        // this.state.input)
+      // .then(response => {
+        // this.setBorderBoxes(this.calculateFaceLocations(response))})
+      // .then(response => {
+        // if (response) {
           // makes call to API to update user rank
           fetch('http://localhost:3001/image', {
             method: 'put',
@@ -104,9 +103,12 @@ class App extends React.Component {
           })
           .then(response => response.json())
           .then(data => {
+            console.log(data);
             this.setState(Object.assign(this.state.user, { rank: data.rank }));
           })
           .catch(err => console.log(err));
+        // }
+      // }).catch(err => console.log(err));
   }
 
   // Handles page changes and user authentication changes
