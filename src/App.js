@@ -12,27 +12,27 @@ import Register from './components/Register/Register'
 
 // Creates Clarifai Authorization and connection to API
 const app = new Clarifai.App({ apiKey: 'a4a64ffe50b94055b3632f9e41fb7313' });
+const initialState = {
+  input: '',
+  imageURL: '',
+  borderBoxes: [],
+  route: 'signin',
+  isSignedIn: false,
+  // keeps track of current user information
+  user: {
+    id: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    rank: 0,
+    joined: new Date(),
+  }
+}
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      input: '',
-      imageURL: '',
-      borderBoxes: [],
-      route: 'signin',
-      isSignedIn: false,
-
-      // keeps track of current user information
-      user: {
-        id: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        rank: 0,
-        joined: new Date(),
-      }
-    }
+    this.state = initialState;
   }
 
   // Loads current signed in user's information to current state
@@ -84,15 +84,15 @@ class App extends React.Component {
   onDetectSubmit = () => {
     this.setState({imageURL: this.state.input});
 
-    // app
-      // .models
-      // .predict(
-        // Clarifai.FACE_DETECT_MODEL, 
-        // this.state.input)
-      // .then(response => {
-        // this.setBorderBoxes(this.calculateFaceLocations(response))})
-      // .then(response => {
-        // if (response) {
+    app
+      .models
+      .predict(
+        Clarifai.FACE_DETECT_MODEL, 
+        this.state.input)
+      .then(response => {
+        this.setBorderBoxes(this.calculateFaceLocations(response))})
+      .then(response => {
+        if (response) {
           // makes call to API to update user rank
           fetch('http://localhost:3001/image', {
             method: 'put',
@@ -103,18 +103,17 @@ class App extends React.Component {
           })
           .then(response => response.json())
           .then(data => {
-            console.log(data);
             this.setState(Object.assign(this.state.user, { rank: data.rank }));
           })
           .catch(err => console.log(err));
-        // }
-      // }).catch(err => console.log(err));
+        }
+      }).catch(err => console.log(err));
   }
 
   // Handles page changes and user authentication changes
   onRouteChange = (route) => {
     if(route === 'signout') {
-      this.setState({isSignedIn: false});
+      this.setState(initialState);
     } else if (route === 'home') {
       this.setState({isSignedIn: true});
     }
