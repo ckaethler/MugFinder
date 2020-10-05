@@ -5,7 +5,7 @@ import './FaceRecognition.css';
 // ----------------------------------------------------------------------------
 const FaceRecognition = ({imageURL, borderBoxes}) => {
     // ------------------------------------------------------------------------
-    let borders = <div></div>;
+    let borders = <div className="borders"></div>;
     if(borderBoxes.length > 0) {
         borders = borderBoxes.map((box, index) => {
            return <div key={index} className="border-box" 
