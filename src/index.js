@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './controllers/App';
 import "typeface-libre-baskerville";
+import "typeface-source-sans-pro";
+
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

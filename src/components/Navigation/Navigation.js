@@ -7,26 +7,43 @@ import AppName from './AppName.png';
 const Navigation = ({onRouteChange, isSignedIn}) => {
     let navigation_links;
 
+    const line_divider = <p className="nav-divider">|</p>
+
     // Handles if user is authenticated
     if (isSignedIn) {
-        navigation_links = <p 
-            onClick={() => onRouteChange('signout')}
-            className=''>
-            Sign Out
-        </p>
+        navigation_links = <div className="nav-links">
+            <p
+                onClick={() => onRouteChange('home')}
+                className="nav-link pointer">
+                Home
+            </p>
+            {line_divider}
+            <p
+                onClick={() => onRouteChange('account')}
+                className="nav-link pointer">
+                My Account
+            </p>
+            {line_divider}
+            <p 
+                onClick={() => onRouteChange('signout')}
+                className="nav-link pointer">
+                Sign Out
+            </p>
+        </div>
+        
 
     // Handles if user isn't authenticated
     } else {
-        navigation_links = 
-        <div>
+        navigation_links = <div className="nav-links">
             <p
                 onClick={() => onRouteChange('signin')}
-                className='pointer'>
+                className="nav-link pointer">
                 Sign In
             </p>
+            {line_divider}
             <p 
                 onClick={() => onRouteChange('register')}
-                className='pointer'>
+                className="nav-link pointer">
                 Register
             </p>
         </div>
