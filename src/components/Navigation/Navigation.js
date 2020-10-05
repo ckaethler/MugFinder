@@ -1,37 +1,41 @@
 // Top Navigation Component
 import React from 'react';
+import './Navigation.css';
 
 const Navigation = ({onRouteChange, isSignedIn}) => {
+    let navigation_links;
+
     // Handles if user is authenticated
-    if(isSignedIn) {
-        return(
-            // Creates navigation with only sign out function
-            <nav style={{display: 'flex', justifyContent: 'flex-end'}}>
-                <p 
-                    onClick={() => onRouteChange('signout')}
-                    className='f3 link dim black underline pa3 pointer'>
-                    Sign Out
-                </p>
-            </nav>
-        ); 
+    if (isSignedIn) {
+        navigation_links = <p 
+            onClick={() => onRouteChange('signout')}
+            className=''>
+            Sign Out
+        </p>
+
     // Handles if user isn't authenticated
     } else {
-        return ( 
-            // Creates nagivation with Sign In and Register routes
-            <nav style={{display: 'flex', justifyContent: 'flex-end'}}>
-                <p 
-                    onClick={() => onRouteChange('signin')}
-                    className='f3 link dim black underline pa3 pointer'>
-                    SignIn
-                </p>
-                <p 
-                    onClick={() => onRouteChange('register')}
-                    className='f3 link dim black underline pa3 pointer'>
-                    Register
-                </p>
-            </nav>
-        );
+        navigation_links = 
+        <div>
+            <p
+                onClick={() => onRouteChange('signin')}
+                className='pointer'>
+                Sign In
+            </p>
+            <p 
+                onClick={() => onRouteChange('register')}
+                className='pointer'>
+                Register
+            </p>
+        </div>
     }
+
+    return(
+        // Creates top navigation
+        <nav className="top-nav">
+            {navigation_links}
+        </nav>
+    ); 
 }
 
 export default Navigation;
