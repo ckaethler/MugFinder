@@ -66,7 +66,8 @@ class SignIn extends React.Component {
                                     type="email" 
                                     name="email-address"  
                                     id="email-address" 
-                                    onChange={this.onEmailChange} />
+                                    onChange={this.onEmailChange} 
+                                    required />
                             </div>
 
                             {/* Password Field */}
@@ -81,7 +82,8 @@ class SignIn extends React.Component {
                                     type="password" 
                                     name="password"  
                                     id="password" 
-                                    onChange={this.onPasswordChange} />
+                                    onChange={this.onPasswordChange} 
+                                    required />
                             </div>
                         </fieldset>
 

@@ -81,7 +81,8 @@ class Register extends React.Component {
                                     type="text" 
                                     name="first-name"  
                                     id="first-name"
-                                    onChange={this.onFirstNameChange} />
+                                    onChange={this.onFirstNameChange} 
+                                    required />
                             </div>
 
                             {/* Creates Last Name Field */}
@@ -95,7 +96,8 @@ class Register extends React.Component {
                                     type="text" 
                                     name="last-name"  
                                     id="last-name"
-                                    onChange={this.onLastNameChange} />
+                                    onChange={this.onLastNameChange} 
+                                    required />
                             </div>
 
                             {/* Creates Email Field */}
@@ -109,7 +111,8 @@ class Register extends React.Component {
                                     type="email" 
                                     name="email-address"  
                                     id="email-address"
-                                    onChange={this.onEmailChange} />
+                                    onChange={this.onEmailChange} 
+                                    required />
                             </div>
 
                             {/* Creates Password Field */}
@@ -124,7 +127,8 @@ class Register extends React.Component {
                                     type="password" 
                                     name="password"  
                                     id="password"
-                                    onChange={this.onPasswordChange} />
+                                    onChange={this.onPasswordChange} 
+                                    required />
                             </div>
 
                             {/* Creates Confirm Password Field */}
@@ -139,7 +143,8 @@ class Register extends React.Component {
                                         hover-bg-black hover-white w-100" 
                                     type="password" 
                                     name="confirm-password"  
-                                    id="confirm-password" />
+                                    id="confirm-password" 
+                                    required />
                             </div>
                         </fieldset>
 
