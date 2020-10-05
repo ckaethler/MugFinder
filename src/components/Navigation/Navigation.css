@@ -2,4 +2,27 @@
     background-color: #324040;
     display: flex;
     color: white;
+    justify-content: space-between;
+    align-items: center;
+    filter: drop-shadow(2px 2px 8px #8b8b8b);
+
+}
+
+.full-logo {
+    display: flex;
+}
+
+.full-logo img {
+    /* align-content: center; */
+    /* justify-content: center; */
+}
+
+.logo {
+    margin: 16px;
+    margin-left: 64px;
+}
+.app-name {
+    max-height: 40px;
+    max-width: 151px;;
+    align-self: center;
 }
