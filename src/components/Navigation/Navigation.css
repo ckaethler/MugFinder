@@ -15,7 +15,6 @@
     text-align: left;
     color: #1f1f1f;
     padding: 0px;
-    /* margin: 0px; */
 }
 
 .nav-links {
@@ -30,11 +29,6 @@
 
 .full-logo {
     display: flex;
-}
-
-.full-logo img {
-    /* align-content: center; */
-    /* justify-content: center; */
 }
 
 .logo {

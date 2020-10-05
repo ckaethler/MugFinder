@@ -35,16 +35,18 @@ const Navigation = ({onRouteChange, isSignedIn}) => {
     // Handles if user isn't authenticated
     } else {
         navigation_links = <div className="nav-links">
+            {/* Create Account */}
+            <p 
+                onClick={() => onRouteChange('register')}
+                className="nav-link pointer">
+                Create Account
+            </p>
+            {line_divider}
+            {/* Sign In */}
             <p
                 onClick={() => onRouteChange('signin')}
                 className="nav-link pointer">
                 Sign In
-            </p>
-            {line_divider}
-            <p 
-                onClick={() => onRouteChange('register')}
-                className="nav-link pointer">
-                Register
             </p>
         </div>
     }
@@ -53,7 +55,9 @@ const Navigation = ({onRouteChange, isSignedIn}) => {
         // Creates top navigation
         <nav className="top-nav">
             {/* Logo and Name */}
-            <div className="full-logo pointer" onClick={() => onRouteChange('home')}>
+            <div 
+                // onClick={() => onRouteChange('home')}
+                className="full-logo pointer" >
                 <img 
                     className="logo"
                     src={Logo} 
