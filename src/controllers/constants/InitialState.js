@@ -3,7 +3,7 @@ const initialState = {
     input: '',
     imageURL: '',
     borderBoxes: [],
-    route: 'signin',
+    route: 'home',
     isSignedIn: false,
     // keeps track of current user information
     user: {

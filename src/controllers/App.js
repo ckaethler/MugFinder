@@ -6,6 +6,7 @@ import FaceRecognition from '../components/FaceRecognition/FaceRecognition';
 import Rank from '../components/Rank/Rank';
 import SignIn from '../components/SignIn/SignIn';
 import Register from '../components/Register/Register';
+import Splash from '../components/Splash/Splash';
 
 const { routes } = require('./constants/Routes');
 const { initialState } = require('./constants/InitialState');
@@ -92,7 +93,7 @@ class App extends React.Component {
   onRouteChange = (route) => {
     if(route === 'signout') {
       this.setState(initialState);
-    } else if (route === 'home') {
+    } else if (route === 'detect') {
       this.setState({isSignedIn: true});
     }
     this.setState({route: route})
@@ -101,6 +102,32 @@ class App extends React.Component {
   render() {
     const { isSignedIn, imageURL, borderBoxes, route } = this.state;
     const { firstName, rank } = this.state.user;
+    let currentPage;
+
+    if (route === 'detect') {
+      currentPage = <div>
+        <Rank 
+          firstName={firstName} 
+          rank={rank} />
+        <ImageLinkForm 
+          onInputChange={this.onInputChange} 
+          onSubmit={this.onDetectSubmit} />
+        <FaceRecognition 
+          imageURL={imageURL}
+          borderBoxes={borderBoxes} />
+      </div>
+    } else if (route === 'signin') {
+      currentPage = <SignIn 
+        onRouteChange={this.onRouteChange} 
+        loadUser={this.loadUser} />
+    } else if (route === 'register') {
+      currentPage = <Register 
+        onRouteChange={this.onRouteChange}
+        loadUser={this.loadUser} />
+    } else if (route === 'home') {
+      currentPage = <Splash onRouteChange={this.onRouteChange} />
+    }
+
     return (
       <div className="App">
         {/* Top Navigaton */}
@@ -109,31 +136,7 @@ class App extends React.Component {
           isSignedIn={isSignedIn}
           currentRoute={route}
           routes={routes} />
-        
-        {/* Authenticated: Main URl Detection Page */}
-        { route === 'home' 
-          ? <div>
-            <Rank 
-              firstName={firstName} 
-              rank={rank} />
-            <ImageLinkForm 
-              onInputChange={this.onInputChange} 
-              onSubmit={this.onDetectSubmit} />
-            <FaceRecognition 
-              imageURL={imageURL}
-              borderBoxes={borderBoxes} />
-          </div>
-
-          // Not Authenticated: User either is signing in or registering
-          : (route === 'signin' ?
-              <SignIn 
-                onRouteChange={this.onRouteChange} 
-                loadUser={this.loadUser} /> :
-              <Register 
-                onRouteChange={this.onRouteChange}
-                loadUser={this.loadUser} />
-            )
-        }
+          {currentPage}
       </div>
     );
   }

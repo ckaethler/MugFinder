@@ -11,8 +11,8 @@ const Navigation = ({onRouteChange, isSignedIn, currentRoute, routes}) => {
         <nav className="top-nav">
             {/* Logo and Name */}
             <div 
-                // onClick={() => onRouteChange('home')}
-                className="full-logo pointer" >
+                onClick={() => onRouteChange('home')}
+                className="full-logo pointer">
                 <img 
                     className="logo"
                     src={Logo} 

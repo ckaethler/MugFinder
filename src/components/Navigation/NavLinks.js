@@ -5,10 +5,7 @@ const NavLinks = ({isSignedIn, currentRoute, onRouteChange, routes}) => {
     // navigation link button classes
     const inactive_nav_class = "nav-link pointer";
     const active_nav_class = "nav-link pointer active-nav";
-    let classes = '', routesArr=[];
-    
-    // button dividers
-    let divider = <p className="nav-divider">|</p>
+    let classes = '', routesArr=[], divider='';
     
     // Determines what array of routes to display
     if (isSignedIn) routesArr = routes.Auth;
@@ -18,11 +15,14 @@ const NavLinks = ({isSignedIn, currentRoute, onRouteChange, routes}) => {
         <div className="nav-links">
             {/* returns links */}
             {routesArr.map((route, index) => {
-                // console.log(route.name, index);
+                // determines nav link classes 
                 if (route.name === currentRoute) classes = active_nav_class;
                 else classes = inactive_nav_class;
-                if (index === (routesArr.length - 1)) divider = '';
-
+                if (index === (routesArr.length - 1)) {
+                    divider = <p key={index + 10} className="nav-divider"></p>
+                } else {
+                    divider = <p key={index + 10} className="nav-divider">|</p>
+                }
                 // returns links as paragraph tag with divider
                 return <>
                         <p

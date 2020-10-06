@@ -10,7 +10,6 @@ h1, h2, h3 {
 }
 
 h1 {
-  text-align: center;
   font-size: 40px;
 }
 
@@ -27,6 +26,10 @@ button {
   justify-content: center;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .btn {
   width: 145px;
   height: 49px;
@@ -38,8 +41,64 @@ button {
   font-weight: bold;
   color: #fff;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .pointer {
   cursor: pointer;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.input-card {
+  width: 50%;
+  max-width: 484px;
+  margin: auto;
+  padding-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+}
+
+.card-header {
+  display: block;
+}
+
+.input-form {
+  height: 48px;
+  border-radius: 16px;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #8b8b8b;
+  align-self: left;
+  margin-bottom: 24px;
+  font-size: 16px;
+  padding-left: 16px;
+}
+
+.input-label {
+  display: block;
+  font-weight: bold;
+  margin: 4px;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inline {
+  display: inline-flex;
+}
+
+.error-txt {
+  font-weight: normal;
+  font-size: 14px;
+  color: #b53939;
+}
+
+.mt-24 {
+  margin-top: 24px;
 }

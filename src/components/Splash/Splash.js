@@ -1,8 +1,9 @@
 import React from 'react';
+import './Splash.css';
 
 const Splash = ({ onRouteChange }) => {
     return (
-        <div className='white f3'>
+        <div className=''>
             <h1>Welcome to MugFinder!</h1>
             <p>You give us the URL of a photo, 
                 we’ll show you any faces in it.
@@ -15,4 +16,4 @@ const Splash = ({ onRouteChange }) => {
     );
 }
 
-export default Rank;
+export default Splash;
