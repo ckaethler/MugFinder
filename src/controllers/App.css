@@ -59,7 +59,6 @@ button {
   padding-top: 40px;
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: center; */
 }
 
 .card-header {
@@ -116,4 +115,25 @@ button {
   font-size: 16px;
   line-height: 40px;
   color: #707070;
+}
+
+.stack {
+  display: block;
+}
+
+.m-auto {
+  margin: auto;
+}
+
+.p-56 {
+  padding: 56px;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.shadow-box {
+  background: #f2f2f2;
+  filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.16));
 }
