@@ -137,3 +137,15 @@ button {
   background: #f2f2f2;
   filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.16));
 }
+
+.border-box {
+  position: absolute;
+  box-shadow: 0 0 0 3px #149df2 inset;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: center;
+  justify-content: center;
+  cursor: pointer;
+}
