@@ -1,4 +1,5 @@
 import React from 'react';
+import './SignIn.css';
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -43,56 +44,57 @@ class SignIn extends React.Component {
     
         return (
             // Sign In Card
-            <div className="">
+            <div className="input-card">
                     {/* Sign In Header */}
-                    <h1 className="">Sign In</h1>
+                    <h1 className="card-header w-100 text-center">Sign In</h1>
 
-                    {/* Email Field */}
+                    <div className="w-100">
+                        {/* Email Field */}
+                        <div className="">
+                            <label 
+                                className="input-label" 
+                                htmlFor="email-address">Email</label>
+                            <input 
+                                className="input-form" 
+                                type="email" 
+                                name="email-address"  
+                                id="email-address" 
+                                onChange={this.onEmailChange} 
+                                required />
+                        </div>
+
+                        {/* Password Field */}
+                        <div className="">
+                            <label 
+                                className="input-label" 
+                                htmlFor="password">Password</label>
+                            <input 
+                                className="input-form" 
+                                type="password" 
+                                name="password"  
+                                id="password" 
+                                onChange={this.onPasswordChange} 
+                                required />
+                        </div>
+
+                    {/* Sign In Button */}
                     <div className="">
-                        <label 
-                            className="" 
-                            htmlFor="email-address">Email</label>
                         <input 
-                            className="" 
-                            type="email" 
-                            name="email-address"  
-                            id="email-address" 
-                            onChange={this.onEmailChange} 
-                            required />
+                            onClick={this.onSubmitSignIn}
+                            className="btn right-align" 
+                            type="submit" 
+                            value="Sign in" />
                     </div>
 
-                    {/* Password Field */}
+                    {/* Register Button */}
                     <div className="">
-                        <label 
-                            className="" 
-                            htmlFor="password">Password</label>
-                        <input 
-                            className="" 
-                            type="password" 
-                            name="password"  
-                            id="password" 
-                            onChange={this.onPasswordChange} 
-                            required />
+                        <p 
+                            onClick={() => onRouteChange('register')} 
+                            className="pointer text-center">
+                            Don't have an account? <strong>Create One.</strong>
+                        </p>
                     </div>
-
-                {/* Sign In Button */}
-                <div className="">
-                    <input 
-                        onClick={this.onSubmitSignIn}
-                        className="" 
-                        type="submit" 
-                        value="Sign in" />
-                </div>
-
-                {/* Register Button */}
-                <div className="">
-                    <p 
-                        onClick={() => onRouteChange('register')} 
-                        className="">
-                        Don't have an account?
-                        <strong>Create One.</strong>
-                    </p>
-                </div>
+                    </div>
             </div>
         );
     }

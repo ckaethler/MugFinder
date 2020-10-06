@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 16px;
   color: #1F1F1F;
@@ -7,18 +6,16 @@
 
 h1, h2, h3 {
   font-family: 'Libre Baskerville', serif;
+  font-weight: normal;
 }
 
 h1 {
+  text-align: center;
   font-size: 40px;
 }
 
 h2 {
   font-size: 32px;
-}
-
-h2 {
-  font-size: 24px;
 }
 
 button {
@@ -28,4 +25,21 @@ button {
 .center {
   display: flex;
   justify-content: center;
+}
+
+.btn {
+  width: 145px;
+  height: 49px;
+  background: linear-gradient(#d8a0a0 0%, #c78686 100%);
+  width: 145px;
+  border-radius: 24.5px;
+  border: 0px;
+  font-family: "Source Sans Pro";
+  font-weight: bold;
+  color: #fff;
+  font-size: 16px;
+}
+
+.pointer {
+  cursor: pointer;
 }
