@@ -109,7 +109,7 @@ class Register extends React.Component {
             .then(data => {
                 if (data.id) {
                     this.props.loadUser(data);
-                    this.props.onRouteChange('home');
+                    this.props.onRouteChange('detect');
                     this.setState({errorMessage: ''})}
                 else {this.setState({errorMessage: ('* ' + data)})}})
             .catch(err => console.log(err));

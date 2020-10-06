@@ -102,3 +102,18 @@ button {
 .mt-24 {
   margin-top: 24px;
 }
+.mt-72 {
+  margin-top: 72px;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.subtext-gray {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 40px;
+  color: #707070;
+}

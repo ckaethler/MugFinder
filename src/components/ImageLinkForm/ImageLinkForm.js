@@ -1,3 +1,4 @@
+// Creates detect image form for user to upload photos
 import React from 'react';
 import "./ImageLinkForm.css";
 
@@ -5,7 +6,7 @@ const ImageLinkForm = ({onInputChange, onSubmit}) => {
     return (
         <div>
             {/* Main Banner of information */}
-            <p className="s3">
+            <p className="">
                 {`This magic brain will detect faces in your pictures. 
                     Give it a try!`}
             </p>

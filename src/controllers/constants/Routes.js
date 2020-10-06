@@ -2,7 +2,7 @@ const routes = {
   NoAuth: [
     {
       name: 'home',
-      display: 'Home'
+      display: 'About'
     },
     {
       name: 'register',
@@ -16,7 +16,7 @@ const routes = {
   Auth: [
     {
       name: 'home',
-      display: 'Home'
+      display: 'About'
     },
     {
       name: 'detect',

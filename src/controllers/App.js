@@ -10,11 +10,12 @@ import Splash from '../components/Splash/Splash';
 
 const { routes } = require('./constants/Routes');
 const { initialState } = require('./constants/InitialState');
+const { TestState } = require('./constants/TestState')
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = initialState;
+    this.state = TestState;
   }
 
   // Loads current signed in user's information to current state

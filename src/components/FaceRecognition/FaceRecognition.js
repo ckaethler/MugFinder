@@ -1,10 +1,9 @@
-// ----------------------------------------------------------------------------
+// Renders picture from internet with boxes around faces
 import React from 'react';
 import './FaceRecognition.css';
 
-// ----------------------------------------------------------------------------
 const FaceRecognition = ({imageURL, borderBoxes}) => {
-    // ------------------------------------------------------------------------
+    // Creates border divs for faces
     let borders = <div className="borders"></div>;
     if(borderBoxes.length > 0) {
         borders = borderBoxes.map((box, index) => {
@@ -18,7 +17,6 @@ const FaceRecognition = ({imageURL, borderBoxes}) => {
         });
     }
 
-    // ------------------------------------------------------------------------
     return (
         <div className="center ma">
             <div className="absolute mt2">

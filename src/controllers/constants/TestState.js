@@ -1,21 +1,21 @@
 // Creates Clarifai Authorization and connection to API
-const initialState = {
+const TestState = {
     input: '',
     imageURL: '',
     borderBoxes: [],
-    route: 'home',
+    route: 'detect',
     isSignedIn: true,
     // keeps track of current user information
     user: {
-      id: '',
-      email: '',
-      firstName: '',
-      lastName: '',
+      id: '45',
+      email: 'test@gmail.com',
+      firstName: 'Test',
+      lastName: 'Test',
       rank: 0,
       joined: new Date(),
     }
 }
 
 module.exports = {
-    initialState: initialState
+    TestState: TestState
 }
