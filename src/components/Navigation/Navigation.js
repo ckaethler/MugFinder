@@ -3,54 +3,9 @@ import React from 'react';
 import './Navigation.css';
 import Logo from './Logo.png';
 import AppName from './AppName.png';
+import NavLinks from './NavLinks';
 
-const Navigation = ({onRouteChange, isSignedIn}) => {
-    let navigation_links;
-
-    const line_divider = <p className="nav-divider">|</p>
-
-    // Handles if user is authenticated
-    if (isSignedIn) {
-        navigation_links = <div className="nav-links">
-            <p
-                onClick={() => onRouteChange('home')}
-                className="nav-link pointer">
-                Home
-            </p>
-            {line_divider}
-            <p
-                onClick={() => onRouteChange('account')}
-                className="nav-link pointer">
-                My Account
-            </p>
-            {line_divider}
-            <p 
-                onClick={() => onRouteChange('signout')}
-                className="nav-link pointer">
-                Sign Out
-            </p>
-        </div>
-        
-
-    // Handles if user isn't authenticated
-    } else {
-        navigation_links = <div className="nav-links">
-            {/* Create Account */}
-            <p 
-                onClick={() => onRouteChange('register')}
-                className="nav-link pointer">
-                Create Account
-            </p>
-            {line_divider}
-            {/* Sign In */}
-            <p
-                onClick={() => onRouteChange('signin')}
-                className="nav-link pointer">
-                Sign In
-            </p>
-        </div>
-    }
-
+const Navigation = ({onRouteChange, isSignedIn, currentRoute, routes}) => {
     return(
         // Creates top navigation
         <nav className="top-nav">
@@ -71,7 +26,11 @@ const Navigation = ({onRouteChange, isSignedIn}) => {
             </div>
 
             {/* Right side nagivation links */}
-            {navigation_links}
+            <NavLinks 
+                currentRoute={currentRoute} 
+                isSignedIn ={isSignedIn} 
+                onRouteChange={onRouteChange}
+                routes={routes} />
         </nav>
     ); 
 }

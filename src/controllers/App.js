@@ -8,23 +8,8 @@ import 'tachyons';
 import SignIn from '../components/SignIn/SignIn';
 import Register from '../components/Register/Register';
 
-// Creates Clarifai Authorization and connection to API
-const initialState = {
-  input: '',
-  imageURL: '',
-  borderBoxes: [],
-  route: 'signin',
-  isSignedIn: false,
-  // keeps track of current user information
-  user: {
-    id: '',
-    email: '',
-    firstName: '',
-    lastName: '',
-    rank: 0,
-    joined: new Date(),
-  }
-}
+const { routes } = require('./constants/Routes');
+const { initialState } = require('./constants/InitialState');
 
 class App extends React.Component {
   constructor(props) {
@@ -122,7 +107,9 @@ class App extends React.Component {
         {/* Top Navigaton */}
         <Navigation 
           onRouteChange={this.onRouteChange} 
-          isSignedIn={isSignedIn} />
+          isSignedIn={isSignedIn}
+          currentRoute={route}
+          routes={routes} />
         
         {/* Authenticated: Main URl Detection Page */}
         { route === 'home' 

@@ -19,12 +19,17 @@
 
 .nav-links {
     display: flex;
+    /* z-index: 1; */
 }
 
 .nav-link {
     align-self: center;
     padding-left: 40px;
     padding-right: 40px;
+}
+
+.active-nav {
+    color: #BF8181;
 }
 
 .full-logo {
