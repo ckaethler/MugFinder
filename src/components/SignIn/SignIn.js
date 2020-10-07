@@ -36,8 +36,7 @@ class SignIn extends React.Component {
                 // this.setState({errorMessage: ''})
             }
             else {this.setState({errorMessage: ('* ' + data)})}})
-        .catch(err => {
-            console.log("Problem signing in")});
+        .catch(err => this.setState({errorMessage: ('* ' + err)}));
     }
 
     render() {
