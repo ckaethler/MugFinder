@@ -66,7 +66,7 @@ class  ImageLinkForm extends React.Component {
     // Handles when users submits a URL of a picture
     onDetectSubmit = () => {
         this.setState({imageURL: this.state.input});
-        fetch('http://localhost:3001/imageurl', {
+        fetch('https://mugfinder-api.herokuapp.com/imageurl', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({input: this.state.input})})
@@ -86,7 +86,7 @@ class  ImageLinkForm extends React.Component {
         .then(response => {
             if (response) {
             // makes call to API to update user rank
-            fetch('http://localhost:3001/image', {
+            fetch('https://mugfinder-api.herokuapp.com/image', {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({id: this.state.user.id})})

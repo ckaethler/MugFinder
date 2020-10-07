@@ -22,7 +22,7 @@ class SignIn extends React.Component {
 
     // Sends attempted email and password to API
     onSubmitSignIn = () => {
-        fetch('https://mugfinder.herokuapp.com/signin', {
+        fetch('https://mugfinder-api.herokuapp.com/signin', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

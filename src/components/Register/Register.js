@@ -96,7 +96,7 @@ class Register extends React.Component {
     // Sends attempted email and password to API
     onSubmitRegister = () => {
         if(this.validateFields()) {   
-            fetch('http://localhost:3001/register', {
+            fetch('https://mugfinder-api.herokuapp.com/register', {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
