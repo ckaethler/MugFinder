@@ -22,7 +22,7 @@ class SignIn extends React.Component {
 
     // Sends attempted email and password to API
     onSubmitSignIn = () => {
-        fetch('http://localhost:3001/signin', {
+        fetch('https://mugfinder.herokuapp.com/signin', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -36,8 +36,7 @@ class SignIn extends React.Component {
                 // this.setState({errorMessage: ''})
             }
             else {this.setState({errorMessage: ('* ' + data)})}})
-        .catch(err => {
-            console.log("Problem signing in")});
+        .catch(err => this.setState({errorMessage: ('* ' + err)}));
     }
 
     render() {
