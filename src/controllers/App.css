@@ -1,7 +1,17 @@
+html, body {
+  height: 100%;
+}
+
 .App {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 16px;
   color: #1F1F1F;
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+  /* margin-bottom: -50px; */
 }
 
 h1, h2, h3 {
@@ -158,8 +168,16 @@ button {
   cursor: pointer;
 }
 
+.footer, .push {
+  height: 84px;
+}
+
 .footer {
   background: #324040;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 .body-white {

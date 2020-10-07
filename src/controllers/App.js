@@ -10,7 +10,7 @@ import Footer from '../components/Footer/Footer';
 
 const { routes } = require('./constants/Routes');
 const { initialState } = require('./constants/InitialState');
-const { TestState } = require('./constants/TestState')
+// const { TestState } = require('./constants/TestState')
 
 class App extends React.Component {
   constructor(props) {
@@ -47,24 +47,6 @@ class App extends React.Component {
       this.setState({isSignedIn: true});
     }
   }
-  // Sends attempted email and password to API
-  onSubmitSignIn = () => {
-    fetch('http://localhost:3001/signin', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            email: this.state.signInEmail,
-            password: this.state.signInPassword})})
-    .then(response => response.json())
-    .then(data => {
-        if (data.id) {
-            this.props.loadUser(data);
-            this.props.onRouteChange('detect');
-            this.setState({errorMessage: ''})}
-        else {this.setState({errorMessage: ('* ' + data)})}})
-    .catch(err => {
-        console.log("Problem signing in")});
-}
 
   render() {
     const { isSignedIn, imageURL, borderBoxes, route } = this.state;
@@ -105,14 +87,15 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        {/* Top Navigaton */}
-        <Navigation 
+          {/* Top Navigaton */}
+          <Navigation 
           onRouteChange={this.onRouteChange} 
           isSignedIn={isSignedIn}
           currentRoute={route}
           routes={routes} />
           {currentPage}
-        <Footer />
+          <div className="push"></div>
+          <Footer />
       </div>
     );
   }
