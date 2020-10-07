@@ -1,31 +1,139 @@
+// Creates detect image form for user to upload photos
 import React from 'react';
+import FaceRecognition from '../FaceRecognition/FaceRecognition';
 import "./ImageLinkForm.css";
 
-const ImageLinkForm = ({onInputChange, onSubmit}) => {
-    return (
-        <div>
-            {/* Main Banner of information */}
-            <p className="s3">
-                {`This magic brain will detect faces in your pictures. 
-                    Give it a try!`}
-            </p>
-            <div className="center">
-                <div className="center pa4 br3 shadow-5 form">
+class  ImageLinkForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            input: '',
+            errors: false,
+            errorMessage: '',
+            borderBoxes: this.props.borderBoxes,
+            imageURL: this.props.imageURL,
+            user: this.props.user,
+        }
+    }
+
+    // Sets state of user's inputted URL
+    onInputChange = (event) => {
+        this.setState({input: event.target.value});
+    }
+
+    // Sets state of face boxes
+    setBorderBoxes = (boxes) => {
+        this.setState({borderBoxes: boxes});
+    }
+
+    // Creates object with information on location of faces in given image
+    calculateFaceLocations = (data) => {
+        const image = document.getElementById("mugImage");
+        const height = Number(image.height);
+        const width = Number(image.width);
+        const rawData = data.outputs[0].data.regions;
+
+        // calculates corners of face boxes based on image size
+        const setBorderBoxes = rawData.map(faceObj => {
+        const boxInfo = faceObj.region_info.bounding_box;
+        return {
+            leftCol: boxInfo.left_col * width,
+            topRow: boxInfo.top_row * height,
+            rightCol: width - (boxInfo.right_col * width),
+            bottomRow: height - (boxInfo.bottom_row * height),
+
+        }});
+        
+        return setBorderBoxes;
+    }
+
+    // Sets error message state
+    setError(message) {
+        this.setState({
+            errorMessage: ('* ' + message),
+            errors: true,
+        });
+    }
+
+    // Resets error message to an empty string
+    resetErrorMessage() {
+        this.setState({
+            errorMessage: '',
+            errors: false
+        });
+    }
+
+    // Handles when users submits a URL of a picture
+    onDetectSubmit = () => {
+        this.setState({imageURL: this.state.input});
+        fetch('http://localhost:3001/imageurl', {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({input: this.state.input})})
+        .then(resp => resp.json())
+        .then(response => {
+            if (response.outputs) {
+                this.resetErrorMessage();
+                this.setBorderBoxes(this.calculateFaceLocations(response))
+            } else {
+                this.setState({
+                    input: '',
+                    borderBoxes: [],
+                    imageURL: ''
+                });
+                this.setError(response);
+            }})
+        .then(response => {
+            if (response) {
+            // makes call to API to update user rank
+            fetch('http://localhost:3001/image', {
+                method: 'put',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({id: this.state.user.id})})
+            .then(response => response.json())
+            .then(data => {
+                this.setState(Object.assign(this.state.user, { rank: data.rank }))})
+            .catch(err => console.log("ImageLink 71", err))}})
+        .catch(err => console.log("ImageLink 72", err));
+    }
+
+    render() {
+        const {imageURL, borderBoxes, errorMessage} = this.state;
+        return (
+            <div className="w-80 m-auto shadow-box p-56">
+                <div className="">
+                    <label 
+                        className="input-label" 
+                        htmlFor="url">Detect someone's mug:</label>
+                </div>
+                
+                <div className="space-between">
                     <input 
-                        className="f4 pa2 w-70 center" 
+                        className="input-form" 
                         type="text" 
-                        onChange={onInputChange}
+                        name="url"  
+                        id="url"
+                        placeholder="Enter a url..."
+                        onChange={this.onInputChange} 
                         required />
                     <button 
-                        className="w-30 grow f4 link ph3 pv2 dib white 
-                            bg-light-purple" 
-                        onClick={onSubmit}>
+                        className="btn ml-16" 
+                        onClick={this.onDetectSubmit}>
                         Detect
                     </button>
                 </div>
+
+                {/* Error Message */}
+                <div className="w-100 error-txt">
+                    <p className="text-center mt-24">{errorMessage}</p>
+                </div>
+                
+                <FaceRecognition 
+                    imageURL={imageURL}
+                    borderBoxes={borderBoxes} />
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default ImageLinkForm;

@@ -6,6 +6,7 @@ class SignIn extends React.Component {
         this.state = {
             signInEmail: '',
             signInPassword: '',
+            errorMessage: '',
         }
     }
 
@@ -26,89 +27,81 @@ class SignIn extends React.Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 email: this.state.signInEmail,
-                password: this.state.signInPassword
-            })
-        })
+                password: this.state.signInPassword})})
         .then(response => response.json())
         .then(data => {
             if (data.id) {
                 this.props.loadUser(data);
-                this.props.onRouteChange('home');
+                this.props.onRouteChange('detect');
+                // this.setState({errorMessage: ''})
             }
-        });
+            else {this.setState({errorMessage: ('* ' + data)})}})
+        .catch(err => {
+            console.log("Problem signing in")});
     }
 
     render() {
         const { onRouteChange } = this.props;
+        const { errorMessage } = this.state;
     
         return (
             // Sign In Card
-            <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 
-                shadow-5 center">
-                <main className="pa4 black-80">
-                    <div className="measure">
-                        
-                        {/* Input Fields */}
-                        <fieldset 
-                            id="sign_up" 
-                            className="ba b--transparent ph0 mh0">
-                            {/* Sign In Header */}
-                            <legend className="f4 fw6 ph0 mh0">Sign In</legend>
+            <div className="input-card ">
+                {/* Sign In Header */}
+                <h1 className="card-header w-100 text-center">Sign In</h1>
 
-                            {/* Email Field */}
-                            <div className="mt3">
-                                <label 
-                                    className="db fw6 lh-copy f6" 
-                                    htmlFor="email-address">Email</label>
-                                <input 
-                                    className="pa2 input-reset ba bg-transparent 
-                                        hover-bg-black hover-white w-100" 
-                                    type="email" 
-                                    name="email-address"  
-                                    id="email-address" 
-                                    onChange={this.onEmailChange} 
-                                    required />
-                            </div>
-
-                            {/* Password Field */}
-                            <div className="mv3">
-                                <label 
-                                    className="db fw6 lh-copy f6" 
-                                    htmlFor="password">Password</label>
-                                <input 
-                                    className="b pa2 input-reset ba 
-                                        bg-transparent hover-bg-black 
-                                        hover-white w-100" 
-                                    type="password" 
-                                    name="password"  
-                                    id="password" 
-                                    onChange={this.onPasswordChange} 
-                                    required />
-                            </div>
-                        </fieldset>
-
-                        {/* Sign In Button */}
-                        <div className="">
-                            <input 
-                                onClick={this.onSubmitSignIn}
-                                className="b ph3 pv2 input-reset ba b--black 
-                                    bg-transparent grow pointer f6 dib" 
-                                type="submit" 
-                                value="Sign in" />
-                        </div>
-
-                        {/* Register Button */}
-                        <div className="lh-copy mt3">
-                            <p 
-                                onClick={() => onRouteChange('register')} 
-                                className="f6 link dim black db pointer">
-                                Don't have an account?
-                                <strong>Create One.</strong>
-                            </p>
-                        </div>
+                <div className="w-100">
+                    {/* Email Field */}
+                    <div className="">
+                        <label 
+                            className="input-label" 
+                            htmlFor="email-address">Email</label>
+                        <input 
+                            className="input-form" 
+                            type="email" 
+                            name="email-address"  
+                            id="email-address"
+                            placeholder="Enter email..."
+                            onChange={this.onEmailChange} 
+                            required />
                     </div>
-                </main>
-            </article>
+
+                    {/* Password Field */}
+                    <div className="">
+                        <label 
+                            className="input-label" 
+                            htmlFor="password">Password</label>
+                        <input 
+                            className="input-form" 
+                            type="password" 
+                            name="password"  
+                            id="password" 
+                            placeholder="Enter password..."
+                            onChange={this.onPasswordChange} 
+                            required />
+                    </div>
+                </div>
+                <div className="w-100 space-between">
+                    {/* Register Button */}
+                    <p 
+                        onClick={() => onRouteChange('register')} 
+                        className="pointer">
+                        Don't have an account? <strong>Create One.</strong>
+                    </p>
+
+                    {/* Sign In Button */}
+                    <input 
+                        onClick={this.onSubmitSignIn}
+                        className="btn" 
+                        type="submit" 
+                        value="Sign in" />
+                </div>
+
+                {/* Error Message */}
+                <div className="w-100 error-txt">
+                    <p className="text-center mt-24">{errorMessage}</p>
+                </div>
+            </div>
         );
     }
 }

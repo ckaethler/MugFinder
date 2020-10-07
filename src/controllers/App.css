@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 16px;
   color: #1F1F1F;
@@ -7,6 +6,7 @@
 
 h1, h2, h3 {
   font-family: 'Libre Baskerville', serif;
+  font-weight: normal;
 }
 
 h1 {
@@ -17,10 +17,6 @@ h2 {
   font-size: 32px;
 }
 
-h2 {
-  font-size: 24px;
-}
-
 button {
   cursor: pointer;
 }
@@ -28,4 +24,159 @@ button {
 .center {
   display: flex;
   justify-content: center;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.btn {
+  width: 145px;
+  height: 49px;
+  background: linear-gradient(#d8a0a0 0%, #c78686 100%);
+  width: 145px;
+  border-radius: 24.5px;
+  border: 0px;
+  font-family: "Source Sans Pro";
+  font-weight: bold;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.input-card {
+  width: 50%;
+  max-width: 484px;
+  margin: auto;
+  padding-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-header {
+  display: block;
+}
+
+.input-form {
+  height: 48px;
+  border-radius: 16px;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #8b8b8b;
+  align-self: left;
+  margin-bottom: 24px;
+  font-size: 16px;
+  padding-left: 16px;
+}
+
+.input-label {
+  display: block;
+  font-weight: bold;
+  margin: 4px;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inline {
+  display: inline-flex;
+}
+
+.error-txt {
+  font-weight: normal;
+  font-size: 14px;
+  color: #b53939;
+}
+
+.mt-24 {
+  margin-top: 24px;
+}
+.mt-72 {
+  margin-top: 72px;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.subtext-gray {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 40px;
+  color: #707070;
+}
+
+.stack {
+  display: block;
+}
+
+.m-auto {
+  margin: auto;
+}
+
+.p-56 {
+  padding: 56px;
+}
+
+.m-56 {
+  margin: 56px;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.shadow-box {
+  background: #f2f2f2;
+  filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.16));
+}
+
+.absolute {
+  position: absolute;
+}
+
+.border-box {
+  position: absolute;
+  box-shadow: 0 0 0 3px #149df2 inset;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.footer {
+  background: #324040;
+}
+
+.body-white {
+  color: white;
+}
+
+.plain-link {
+  text-emphasis: none;
+}
+
+.p-24 {
+  padding: 24px;
+}
+.p-16 {
+  padding: 16px;
+}
+
+.m-16 {
+  margin: 16px;
 }

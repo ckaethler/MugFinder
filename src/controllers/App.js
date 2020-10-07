@@ -2,33 +2,20 @@ import React from 'react';
 import './App.css';
 import Navigation from '../components/Navigation/Navigation';
 import ImageLinkForm from '../components/ImageLinkForm/ImageLinkForm';
-import FaceRecognition from '../components/FaceRecognition/FaceRecognition';
 import Rank from '../components/Rank/Rank';
-import 'tachyons';
 import SignIn from '../components/SignIn/SignIn';
 import Register from '../components/Register/Register';
+import Splash from '../components/Splash/Splash';
+import Footer from '../components/Footer/Footer';
 
-// Creates Clarifai Authorization and connection to API
-const initialState = {
-  input: '',
-  imageURL: '',
-  borderBoxes: [],
-  route: 'signin',
-  isSignedIn: false,
-  // keeps track of current user information
-  user: {
-    id: '',
-    email: '',
-    firstName: '',
-    lastName: '',
-    rank: 0,
-    joined: new Date(),
-  }
-}
+const { routes } = require('./constants/Routes');
+const { initialState } = require('./constants/InitialState');
+const { TestState } = require('./constants/TestState')
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    // Initial state kept in seperate constants folder
     this.state = initialState;
   }
 
@@ -46,108 +33,86 @@ class App extends React.Component {
     });
   }
 
-  // Creates object with information on location of faces in given image
-  calculateFaceLocations = (data) => {
-    const image = document.getElementById("mugImage");
-    const height = Number(image.height);
-    const width = Number(image.width);
-    const rawData = data.outputs[0].data.regions;
-
-    // calculates corners of face boxes based on image size
-    const setBorderBoxes = rawData.map(faceObj => {
-      const boxInfo = faceObj.region_info.bounding_box;
-      return {
-        leftCol: boxInfo.left_col * width,
-        topRow: boxInfo.top_row * height,
-        rightCol: width - (boxInfo.right_col * width),
-        bottomRow: height - (boxInfo.bottom_row * height),
-      }
-    });
-    
-    return setBorderBoxes;
-  }
-
-  // Sets state of face boxes
-  setBorderBoxes = (boxes) => {
-    this.setState({borderBoxes: boxes});
-  }
-
-  // Sets state of user's inputted URL
-  onInputChange = (event) => {
-    this.setState({input: event.target.value});
-  }
-
-  // Handles when users submits a URL of a picture
-  onDetectSubmit = () => {
-    this.setState({imageURL: this.state.input});
-    fetch('http://localhost:3001/imageurl', {
-      method: 'post',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({id: this.state.input})})
-    .then(resp => resp.json())
-    .then(response => {
-      this.setBorderBoxes(this.calculateFaceLocations(response))})
-    .then(response => {
-      if (response) {
-        // makes call to API to update user rank
-        fetch('http://localhost:3001/image', {
-          method: 'put',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({id: this.state.user.id})
-        })
-        .then(response => response.json())
-        .then(data => {
-          this.setState(Object.assign(this.state.user, { rank: data.rank }));
-        })
-        .catch(err => console.log(err));
-      }
-    }).catch(err => console.log(err));
+  logOut = () => {
+    this.setState(initialState);
   }
 
   // Handles page changes and user authentication changes
   onRouteChange = (route) => {
+    this.setState({route: route});
+
     if(route === 'signout') {
-      this.setState(initialState);
-    } else if (route === 'home') {
+      this.logOut();
+    } else if (route === 'detect') {
       this.setState({isSignedIn: true});
     }
-    this.setState({route: route})
   }
+  // Sends attempted email and password to API
+  onSubmitSignIn = () => {
+    fetch('http://localhost:3001/signin', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            email: this.state.signInEmail,
+            password: this.state.signInPassword})})
+    .then(response => response.json())
+    .then(data => {
+        if (data.id) {
+            this.props.loadUser(data);
+            this.props.onRouteChange('detect');
+            this.setState({errorMessage: ''})}
+        else {this.setState({errorMessage: ('* ' + data)})}})
+    .catch(err => {
+        console.log("Problem signing in")});
+}
 
   render() {
     const { isSignedIn, imageURL, borderBoxes, route } = this.state;
     const { firstName, rank } = this.state.user;
+    let currentPage;
+    // Sends user to mug detection page
+    if (route === 'detect') {
+      currentPage = <div>
+        <Rank 
+          firstName={firstName} 
+          rank={rank} />
+        <ImageLinkForm 
+          onInputChange={this.onInputChange} 
+          onSubmit={this.onDetectSubmit}
+          imageURL={imageURL}
+          borderBoxes={borderBoxes}
+          user={this.state.user} />
+      </div>
+      
+    // Sends user to sign in form
+    } else if (route === 'signin') {
+      currentPage = <SignIn 
+        onRouteChange={this.onRouteChange} 
+        loadUser={this.loadUser} />
+    
+    // Sends user to register page
+    } else if (route === 'register') {
+      currentPage = <Register 
+        onRouteChange={this.onRouteChange}
+        loadUser={this.loadUser} />
+    
+    // Sends user to about/home splash page
+    } else if (route === 'home') {
+      currentPage = <Splash 
+        onRouteChange={this.onRouteChange}
+        isSignedIn={this.state.isSignedIn} />
+    }
+
     return (
       <div className="App">
         {/* Top Navigaton */}
         <Navigation 
           onRouteChange={this.onRouteChange} 
-          isSignedIn={isSignedIn} />
-        
-        {/* Authenticated: Main URl Detection Page */}
-        { route === 'home' 
-          ? <div>
-            <Rank 
-              firstName={firstName} 
-              rank={rank} />
-            <ImageLinkForm 
-              onInputChange={this.onInputChange} 
-              onSubmit={this.onDetectSubmit} />
-            <FaceRecognition 
-              imageURL={imageURL}
-              borderBoxes={borderBoxes} />
-          </div>
-
-          // Not Authenticated: User either is signing in or registering
-          : (route === 'signin' ?
-              <SignIn 
-                onRouteChange={this.onRouteChange} 
-                loadUser={this.loadUser} /> :
-              <Register 
-                onRouteChange={this.onRouteChange}
-                loadUser={this.loadUser} />
-            )
-        }
+          isSignedIn={isSignedIn}
+          currentRoute={route}
+          routes={routes} />
+          {currentPage}
+        <Footer />
       </div>
     );
   }

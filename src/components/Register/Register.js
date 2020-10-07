@@ -1,175 +1,219 @@
 import React from 'react';
 
+const onlyLetters = (/^[A-Za-z]+$/);
+const validEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 class Register extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            registerFirstName: '',
-            registerLastName: '',
-            registerEmail: '',
-            registerPassword: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            errors: false,
+            errorMessage: '',
         }
     }
 
-    // Sets first name 
+    // Checks a string to see if contains only letters
+    containsOnlyLetters (input) {
+        if (onlyLetters.test(input)) return true;
+        else return false;
+    }
+
+    // Checks a string to see if valid email format
+    validEmail(input) {
+        if (validEmail.test(input)) return true;
+        else return false;
+    }
+
+    // Sets error message state
+    setError(message) {
+        this.setState({
+            errorMessage: ('* ' + message),
+            errors: true,
+        });
+    }
+
+    // Resets error message to an empty string
+    resetErrorMessage() {
+        this.setState({
+            errorMessage: '',
+            errors: false
+        });
+    }
+
+    // Sets first name state
     onFirstNameChange = (event) => {
-        this.setState({registerFirstName: event.target.value});
+        this.setState({firstName: event.target.value});
     }
 
-    // Sets last name
+    // Sets last name state
     onLastNameChange = (event) => {
-        this.setState({registerLastName: event.target.value});
+        this.setState({lastName: event.target.value});
     }
 
-    // Sets email
+    // Sets email state
     onEmailChange = (event) => {
-        this.setState({registerEmail: event.target.value})
+        this.setState({email: event.target.value});
     }
 
     // Sets password
     onPasswordChange = (event) => {
-        this.setState({registerPassword: event.target.value})
+        this.setState({password: event.target.value})
+    }
+
+    // Sets confirm password
+    onPasswordConfirm = (event) => {
+        this.setState({confirmPassword: event.target.value});
+    }
+
+    // Validates fields
+    validateFields = () => {
+        const {firstName, lastName, email } = this.state;
+        const {password, confirmPassword} = this.state;
+        
+        if(!this.containsOnlyLetters(firstName)) {
+            this.setError("First name can only contain letters.")
+            return false;
+        } else if (!this.containsOnlyLetters(lastName)) {
+            this.setError("Last name can only contain letters");
+            return false;
+        } else if (!this.validEmail(email)) {
+            this.setError("Email is invalid format");
+            return false;
+        } else if (!(password === confirmPassword)) {
+            this.setError("Passwords don't match.");
+            return false;
+        } else {
+            this.resetErrorMessage();
+            return true;
+        }
     }
 
     // Sends attempted email and password to API
-    onSubmitSignIn = () => {
-        fetch('http://localhost:3001/register', {
-            method: 'post',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                email: this.state.registerEmail,
-                password: this.state.registerPassword,
-                firstName: this.state.registerFirstName,
-                lastName: this.state.registerLastName,
-            })
-        })
-        .then(response => response.json())
-        .then(user => {
-            if (user.id) {
-                this.props.loadUser(user);
-                this.props.onRouteChange('home');
-            }
-        }).catch(err => console.log(err));
+    onSubmitRegister = () => {
+        if(this.validateFields()) {   
+            fetch('http://localhost:3001/register', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName})})
+            .then(response => response.json())
+            .then(data => {
+                if (data.id) {
+                    this.props.loadUser(data);
+                    this.props.onRouteChange('detect');
+                    this.setState({errorMessage: ''})}
+                else {this.setState({errorMessage: ('* ' + data)})}})
+            .catch(err => console.log(err));
+        }
     }
 
     render() {
         const { onRouteChange } = this.props;
-
+        const { errorMessage } = this.state;
         return (
-            // Creates Register Form
-            <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 
-                shadow-5 center">
-                <main className="pa4 black-80">
-                    <div className="measure">
-                        <fieldset 
-                            id="sign_up" 
-                            className="ba b--transparent ph0 mh0">
-                            
-                            {/* Creates Card Header */}
-                            <legend className="f4 fw6 ph0 mh0">
-                                Create Account
-                            </legend>
+            // Register Card
+            <div className="input-card ">
+                {/* Create Account Header */}
+                <h1 className="card-header w-100 text-center">Create Account</h1>
 
-                            {/* Creates First Name Field */}
-                            <div className="mt3">
-                                <label 
-                                    className="db fw6 lh-copy f6" 
-                                    htmlFor="First Name">First Name</label>
-                                <input 
-                                    className="pa2 input-reset ba bg-transparent 
-                                        hover-bg-black hover-white w-100" 
-                                    type="text" 
-                                    name="first-name"  
-                                    id="first-name"
-                                    onChange={this.onFirstNameChange} 
-                                    required />
-                            </div>
+                {/* Input Fields */}
+                <div className="w-100">
+                    {/* First Name Field */}
+                    <label 
+                        className="input-label" 
+                        htmlFor="firstName">First Name</label>
+                    <input 
+                        className="input-form" 
+                        type="text" 
+                        name="firstName"  
+                        id="firstName"
+                        placeholder="Enter first name..."
+                        onChange={this.onFirstNameChange} 
+                        required />
 
-                            {/* Creates Last Name Field */}
-                            <div className="mt3">
-                                <label 
-                                    className="db fw6 lh-copy f6" 
-                                    htmlFor="last-name">Last Name</label>
-                                <input 
-                                    className="pa2 input-reset ba bg-transparent 
-                                        hover-bg-black hover-white w-100" 
-                                    type="text" 
-                                    name="last-name"  
-                                    id="last-name"
-                                    onChange={this.onLastNameChange} 
-                                    required />
-                            </div>
+                    {/* Last Name Field */}
+                    <label 
+                        className="input-label" 
+                        htmlFor="lastName">Last Name</label>
+                    <input 
+                        className="input-form" 
+                        type="text" 
+                        name="lastName"  
+                        id="lastName"
+                        placeholder="Enter last name..."
+                        onChange={this.onLastNameChange} 
+                        required />
 
-                            {/* Creates Email Field */}
-                            <div className="mt3">
-                                <label 
-                                    className="db fw6 lh-copy f6" 
-                                    htmlFor="email-address">Email</label>
-                                <input 
-                                    className="pa2 input-reset ba bg-transparent 
-                                        hover-bg-black hover-white w-100" 
-                                    type="email" 
-                                    name="email-address"  
-                                    id="email-address"
-                                    onChange={this.onEmailChange} 
-                                    required />
-                            </div>
+                    {/* Email Field */}
+                    <label 
+                        className="input-label" 
+                        htmlFor="email">Email</label>
+                    <input 
+                        className="input-form" 
+                        type="email" 
+                        name="email"  
+                        id="email"
+                        placeholder="Enter email..."
+                        onChange={this.onEmailChange} 
+                        required />
 
-                            {/* Creates Password Field */}
-                            <div className="mv3">
-                                <label 
-                                    className="db fw6 lh-copy f6" 
-                                    htmlFor="password">Password</label>
-                                <input 
-                                    className="b pa2 input-reset ba 
-                                        bg-transparent hover-bg-black 
-                                        hover-white w-100" 
-                                    type="password" 
-                                    name="password"  
-                                    id="password"
-                                    onChange={this.onPasswordChange} 
-                                    required />
-                            </div>
+                    {/* Password Field */}
+                    <label 
+                        className="input-label" 
+                        htmlFor="password">Password</label>
+                    <input 
+                        className="input-form" 
+                        type="password" 
+                        name="password"  
+                        id="password" 
+                        placeholder="Enter password..."
+                        onChange={this.onPasswordChange} 
+                        required />
 
-                            {/* Creates Confirm Password Field */}
-                            <div className="mv3">
-                                <label 
-                                    className="db fw6 lh-copy f6" 
-                                    htmlFor="confirm-password">
-                                    Confirm Password
-                                </label>
-                                <input 
-                                    className="b pa2 input-reset ba bg-transparent 
-                                        hover-bg-black hover-white w-100" 
-                                    type="password" 
-                                    name="confirm-password"  
-                                    id="confirm-password" 
-                                    required />
-                            </div>
-                        </fieldset>
+                    {/* Confirm Password Field */}
+                    <label 
+                        className="input-label" 
+                        htmlFor="confirmPassword">Confirm Password</label>
+                    <input 
+                        className="input-form" 
+                        type="password" 
+                        name="confirmPassword"  
+                        id="confirmPassword" 
+                        placeholder="Retype password..."
+                        onChange={this.onPasswordConfirm} 
+                        required />
+                </div>
+                
+                {/* Register and Sign in Buttons */}
+                <div className="w-100 space-between">
+                    {/* Register Button */}
+                    <p 
+                        onClick={() => onRouteChange('signin')} 
+                        className="pointer">
+                        Already have an account? <strong>Sign in.</strong>
+                    </p>
 
-                        {/* Creates Submit Button */}
-                        <div className="">
-                            <input 
-                                onClick={this.onSubmitSignIn}
-                                className="b ph3 pv2 input-reset ba b--black 
-                                    bg-transparent grow pointer f6 dib" 
-                                type="submit" 
-                                value="Create" />
-                        </div>
+                    {/* Register Button */}
+                    <input 
+                        onClick={this.onSubmitRegister}
+                        className="btn" 
+                        type="submit" 
+                        value="Create" />
+                </div>
 
-                        {/* Creates Sign In Link */}
-                        <div className="lh-copy mt3">
-                            <p
-                                onClick={() => onRouteChange('signin')} 
-                                className="f6 link dim black db pointer">
-                                Already have an account? 
-                                <strong>Sign in.</strong>
-                            </p>
-                        </div>
-                    </div>
-                </main>
-            </article>
+                {/* Error Message */}
+                <div className="w-100 error-txt">
+                    <p className="text-center mt-24">{errorMessage}</p>
+                </div>
+            </div>
         );
     }
 }
