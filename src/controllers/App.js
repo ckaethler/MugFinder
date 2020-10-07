@@ -6,6 +6,7 @@ import Rank from '../components/Rank/Rank';
 import SignIn from '../components/SignIn/SignIn';
 import Register from '../components/Register/Register';
 import Splash from '../components/Splash/Splash';
+import Footer from '../components/Footer/Footer';
 
 const { routes } = require('./constants/Routes');
 const { initialState } = require('./constants/InitialState');
@@ -15,7 +16,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     // Initial state kept in seperate constants folder
-    this.state = TestState;
+    this.state = initialState;
   }
 
   // Loads current signed in user's information to current state
@@ -32,21 +33,43 @@ class App extends React.Component {
     });
   }
 
+  logOut = () => {
+    this.setState(initialState);
+  }
+
   // Handles page changes and user authentication changes
   onRouteChange = (route) => {
+    this.setState({route: route});
+
     if(route === 'signout') {
-      this.setState(initialState);
+      this.logOut();
     } else if (route === 'detect') {
       this.setState({isSignedIn: true});
     }
-    this.setState({route: route})
   }
+  // Sends attempted email and password to API
+  onSubmitSignIn = () => {
+    fetch('http://localhost:3001/signin', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            email: this.state.signInEmail,
+            password: this.state.signInPassword})})
+    .then(response => response.json())
+    .then(data => {
+        if (data.id) {
+            this.props.loadUser(data);
+            this.props.onRouteChange('detect');
+            this.setState({errorMessage: ''})}
+        else {this.setState({errorMessage: ('* ' + data)})}})
+    .catch(err => {
+        console.log("Problem signing in")});
+}
 
   render() {
     const { isSignedIn, imageURL, borderBoxes, route } = this.state;
     const { firstName, rank } = this.state.user;
     let currentPage;
-
     // Sends user to mug detection page
     if (route === 'detect') {
       currentPage = <div>
@@ -57,7 +80,8 @@ class App extends React.Component {
           onInputChange={this.onInputChange} 
           onSubmit={this.onDetectSubmit}
           imageURL={imageURL}
-          borderBoxes={borderBoxes} />
+          borderBoxes={borderBoxes}
+          user={this.state.user} />
       </div>
       
     // Sends user to sign in form
@@ -74,7 +98,9 @@ class App extends React.Component {
     
     // Sends user to about/home splash page
     } else if (route === 'home') {
-      currentPage = <Splash onRouteChange={this.onRouteChange} />
+      currentPage = <Splash 
+        onRouteChange={this.onRouteChange}
+        isSignedIn={this.state.isSignedIn} />
     }
 
     return (
@@ -86,6 +112,7 @@ class App extends React.Component {
           currentRoute={route}
           routes={routes} />
           {currentPage}
+        <Footer />
       </div>
     );
   }

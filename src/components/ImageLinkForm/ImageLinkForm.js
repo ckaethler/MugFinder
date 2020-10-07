@@ -8,9 +8,11 @@ class  ImageLinkForm extends React.Component {
         super(props);
         this.state = {
             input: '',
-            error: '',
+            errors: false,
             errorMessage: '',
-            borderBoxes: [],
+            borderBoxes: this.props.borderBoxes,
+            imageURL: this.props.imageURL,
+            user: this.props.user,
         }
     }
 
@@ -29,7 +31,6 @@ class  ImageLinkForm extends React.Component {
         const image = document.getElementById("mugImage");
         const height = Number(image.height);
         const width = Number(image.width);
-        console.log(data);
         const rawData = data.outputs[0].data.regions;
 
         // calculates corners of face boxes based on image size
@@ -40,10 +41,26 @@ class  ImageLinkForm extends React.Component {
             topRow: boxInfo.top_row * height,
             rightCol: width - (boxInfo.right_col * width),
             bottomRow: height - (boxInfo.bottom_row * height),
-        }
-        });
+
+        }});
         
         return setBorderBoxes;
+    }
+
+    // Sets error message state
+    setError(message) {
+        this.setState({
+            errorMessage: ('* ' + message),
+            errors: true,
+        });
+    }
+
+    // Resets error message to an empty string
+    resetErrorMessage() {
+        this.setState({
+            errorMessage: '',
+            errors: false
+        });
     }
 
     // Handles when users submits a URL of a picture
@@ -54,7 +71,18 @@ class  ImageLinkForm extends React.Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({input: this.state.input})})
         .then(resp => resp.json())
-        .then(response => this.setBorderBoxes(this.calculateFaceLocations(response)))
+        .then(response => {
+            if (response.outputs) {
+                this.resetErrorMessage();
+                this.setBorderBoxes(this.calculateFaceLocations(response))
+            } else {
+                this.setState({
+                    input: '',
+                    borderBoxes: [],
+                    imageURL: ''
+                });
+                this.setError(response);
+            }})
         .then(response => {
             if (response) {
             // makes call to API to update user rank
@@ -65,12 +93,12 @@ class  ImageLinkForm extends React.Component {
             .then(response => response.json())
             .then(data => {
                 this.setState(Object.assign(this.state.user, { rank: data.rank }))})
-            .catch(err => console.log(err))}})
-        .catch(err => console.log(err));
+            .catch(err => console.log("ImageLink 71", err))}})
+        .catch(err => console.log("ImageLink 72", err));
     }
 
     render() {
-        const {imageURL, borderBoxes} = this.state;
+        const {imageURL, borderBoxes, errorMessage} = this.state;
         return (
             <div className="w-80 m-auto shadow-box p-56">
                 <div className="">
@@ -94,6 +122,12 @@ class  ImageLinkForm extends React.Component {
                         Detect
                     </button>
                 </div>
+
+                {/* Error Message */}
+                <div className="w-100 error-txt">
+                    <p className="text-center mt-24">{errorMessage}</p>
+                </div>
+                
                 <FaceRecognition 
                     imageURL={imageURL}
                     borderBoxes={borderBoxes} />

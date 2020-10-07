@@ -129,6 +129,10 @@ button {
   padding: 56px;
 }
 
+.m-56 {
+  margin: 56px;
+}
+
 .w-80 {
   width: 80%;
 }
@@ -136,6 +140,10 @@ button {
 .shadow-box {
   background: #f2f2f2;
   filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.16));
+}
+
+.absolute {
+  position: absolute;
 }
 
 .border-box {
@@ -148,4 +156,27 @@ button {
   -ms-flex-pack: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.footer {
+  background: #324040;
+}
+
+.body-white {
+  color: white;
+}
+
+.plain-link {
+  text-emphasis: none;
+}
+
+.p-24 {
+  padding: 24px;
+}
+.p-16 {
+  padding: 16px;
+}
+
+.m-16 {
+  margin: 16px;
 }

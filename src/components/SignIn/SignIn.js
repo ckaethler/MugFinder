@@ -33,11 +33,11 @@ class SignIn extends React.Component {
             if (data.id) {
                 this.props.loadUser(data);
                 this.props.onRouteChange('detect');
-                this.setState({errorMessage: ''})}
+                // this.setState({errorMessage: ''})
+            }
             else {this.setState({errorMessage: ('* ' + data)})}})
         .catch(err => {
-            console.log(err)
-            console.log("its happening")});
+            console.log("Problem signing in")});
     }
 
     render() {

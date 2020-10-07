@@ -35,7 +35,6 @@ class Register extends React.Component {
             errorMessage: ('* ' + message),
             errors: true,
         });
-        console.log(message);
     }
 
     // Resets error message to an empty string

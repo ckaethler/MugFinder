@@ -17,14 +17,17 @@ const FaceRecognition = ({imageURL, borderBoxes}) => {
     }
 
     return (
-        <div className="">
-            <img
-                id="mugImage"
-                src={imageURL} 
-                alt="" 
-                width="600px"
-                height="auto" />
-            {borders}
+        <div className="w-100 center">
+            <div className="absolute mt-72">
+                <img
+                    id="mugImage"
+                    className=""
+                    src={imageURL} 
+                    alt="" 
+                    width="800px"
+                    height="auto" />
+                {borders}
+            </div>
         </div>
     );
 }
