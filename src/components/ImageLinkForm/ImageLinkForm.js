@@ -74,7 +74,8 @@ class  ImageLinkForm extends React.Component {
         .then(response => {
             if (response.outputs) {
                 this.resetErrorMessage();
-                this.setBorderBoxes(this.calculateFaceLocations(response))
+                this.setBorderBoxes(this.calculateFaceLocations(response));
+                return response;
             } else {
                 this.setState({
                     input: '',
@@ -82,9 +83,8 @@ class  ImageLinkForm extends React.Component {
                     imageURL: ''
                 });
                 this.setError(response);
-            }})
+                return false; }})
         .then(response => {
-            if (response) {
             // makes call to API to update user rank
             fetch('https://mugfinder-api.herokuapp.com/image', {
                 method: 'put',
@@ -93,8 +93,8 @@ class  ImageLinkForm extends React.Component {
             .then(response => response.json())
             .then(data => {
                 this.setState(Object.assign(this.state.user, { rank: data.rank }))})
-            .catch(err => console.log("ImageLink 71", err))}})
-        .catch(err => console.log("ImageLink 72", err));
+            .catch(err => this.setError(err))})
+        .catch(err => this.setError(err));
     }
 
     render() {
