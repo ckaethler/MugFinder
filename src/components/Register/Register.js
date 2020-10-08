@@ -7,8 +7,8 @@ class Register extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName: '',
+            firstname: '',
+            lastname: '',
             email: '',
             password: '',
             confirmPassword: '',
@@ -46,13 +46,13 @@ class Register extends React.Component {
     }
 
     // Sets first name state
-    onFirstNameChange = (event) => {
-        this.setState({firstName: event.target.value});
+    onFirstnameChange = (event) => {
+        this.setState({firstname: event.target.value});
     }
 
     // Sets last name state
     onLastNameChange = (event) => {
-        this.setState({lastName: event.target.value});
+        this.setState({lastname: event.target.value});
     }
 
     // Sets email state
@@ -72,13 +72,13 @@ class Register extends React.Component {
 
     // Validates fields
     validateFields = () => {
-        const {firstName, lastName, email } = this.state;
+        const {firstname, lastname, email } = this.state;
         const {password, confirmPassword} = this.state;
         
-        if(!this.containsOnlyLetters(firstName)) {
+        if(!this.containsOnlyLetters(firstname)) {
             this.setError("First name can only contain letters.")
             return false;
-        } else if (!this.containsOnlyLetters(lastName)) {
+        } else if (!this.containsOnlyLetters(lastname)) {
             this.setError("Last name can only contain letters");
             return false;
         } else if (!this.validEmail(email)) {
@@ -102,8 +102,8 @@ class Register extends React.Component {
                 body: JSON.stringify({
                     email: this.state.email,
                     password: this.state.password,
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName})})
+                    firstname: this.state.firstname,
+                    lastname: this.state.lastname})})
             .then(response => response.json())
             .then(data => {
                 if (data.id) {
@@ -129,25 +129,25 @@ class Register extends React.Component {
                     {/* First Name Field */}
                     <label 
                         className="input-label" 
-                        htmlFor="firstName">First Name</label>
+                        htmlFor="firstname">First Name</label>
                     <input 
                         className="input-form" 
                         type="text" 
-                        name="firstName"  
-                        id="firstName"
+                        name="firstname"  
+                        id="firstname"
                         placeholder="Enter first name..."
-                        onChange={this.onFirstNameChange} 
+                        onChange={this.onfirstnameChange} 
                         required />
 
                     {/* Last Name Field */}
                     <label 
                         className="input-label" 
-                        htmlFor="lastName">Last Name</label>
+                        htmlFor="lastname">Last Name</label>
                     <input 
                         className="input-form" 
                         type="text" 
-                        name="lastName"  
-                        id="lastName"
+                        name="lastname"  
+                        id="lastname"
                         placeholder="Enter last name..."
                         onChange={this.onLastNameChange} 
                         required />

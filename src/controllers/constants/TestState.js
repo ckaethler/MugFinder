@@ -9,8 +9,8 @@ const TestState = {
     user: {
       id: '45',
       email: 'test@gmail.com',
-      firstName: 'Test',
-      lastName: 'Test',
+      firstname: 'Test',
+      lastname: 'Test',
       rank: 0,
       joined: new Date(),
     }

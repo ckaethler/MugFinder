@@ -25,8 +25,8 @@ class App extends React.Component {
       user: {
         id: currentUser.id,
         email: currentUser.email,
-        firstName: currentUser.firstName,
-        lastName: currentUser.lastName,
+        firstname: currentUser.firstname,
+        lastname: currentUser.lastname,
         rank: currentUser.rank,
         joined: currentUser.joined,
       }
@@ -50,13 +50,13 @@ class App extends React.Component {
 
   render() {
     const { isSignedIn, imageURL, borderBoxes, route } = this.state;
-    const { firstName, rank } = this.state.user;
+    const { firstname, rank } = this.state.user;
     let currentPage;
     // Sends user to mug detection page
     if (route === 'detect') {
       currentPage = <div>
         <Rank 
-          firstName={firstName} 
+          firstname={firstname} 
           rank={rank} />
         <ImageLinkForm 
           onInputChange={this.onInputChange} 
