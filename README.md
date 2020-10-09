@@ -6,7 +6,7 @@ MugFinder is a front-end application that enables users to upload and view faces
 
 ## Installation
 
-Download the source code locally and use the package manager [npm](https://www.npmjs.com/package/npm) to install PokemonGuidebook.
+Download the source code locally and use the package manager [npm](https://www.npmjs.com/package/npm) to install.
 
 ```bash
 cd MugFinder
