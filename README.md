@@ -18,3 +18,6 @@ To run locally:
 ```bash
 npm start
 ```
+
+## Back End
+See [MugFinder-API](https://github.com/ckaethler/MugFinderAPI)
