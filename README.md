@@ -1,4 +1,4 @@
-# PokemonGuidebook
+# MugFinder
 
 MugFinder is a front-end application that enables users to upload and view faces of photographs.
 
